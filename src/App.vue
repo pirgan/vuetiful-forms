@@ -3,19 +3,11 @@
     <div class="row">
       <div class="col-12">
         <form v-on:submit.prevent="onSubmit">
-          <div class="form-group">
-            <label>First Name:</label>
-            <input v-model="form.firstName" type="text" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Last Name:</label>
-            <input v-model="form.lastName" type="text" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Email:</label>
-            <input v-model="form.email" type="email" class="form-control">
-          </div>
-          <div class="form-group">
+          <BaseInput label="First Name" v-model="form.firstName" />
+					<BaseInput label="Last Name" v-model="form.lastName" />
+					<BaseInput label="Email" v-model="form.email" />
+					<BaseSelect  label="What do you love most about Vue?" v-bind:options="loveOptions" v-model="form.love" />
+					<div class="form-group">
             <button v-bind:disabled="!formIsValid" type="submit" class="btn btn-primary">Submit</button>
           </div>
         </form>
@@ -25,16 +17,27 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
+import BaseInput from '@/components/BaseInput'
+import BaseSelect from '@/components/BaseSelect'
+
 export default {
   name: 'app',
+	components: { BaseInput, BaseSelect },
   data() {
     return {
       form: {
         firstName: '',
         lastName: '',
-        email: ''
-      }
+        email: '',
+				love: 'fun'
+      },
+			loveOptions: [
+				{ label: 'Fun to use', value: 'fun' },
+        { label: 'Friendly learning curve', value: 'curve' },
+        { label: 'Amazing documentation', value: 'docs' },
+        { label: 'Fantastic community', value: 'community' }
+			]
     }
   },
   computed: {
